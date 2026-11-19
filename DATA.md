@@ -129,8 +129,10 @@ agent-services writes no file on your computer. Codex itself keeps:
   Your company admin can turn it off for everyone by turning the savings record off. There is no backfill: counts
   start when sharing is on, and only Codex 0.167 or later sends them.
 - Subagent routing has no separate switch on Codex: disable the plugin's hooks in Codex, or the plugin.
-- The hooks run only if you trust them in Codex; untrusted plugin hooks are skipped. Codex puts them back under
-  review after every plugin update: open Codex, run `/hooks` and press `t` to trust the agent-services hooks again.
+- Codex skips plugin hooks until you review and trust them. In the desktop app, use **Review hooks** in the
+  composer or **Settings > Hooks**. In the CLI, use `/hooks`. Review new or changed definitions under
+  `agent-services@agent-plugin-codex`. An approval saved for `agent-services@agent-plugin` applies only to that
+  older marketplace installation. MCP sign-in is separate from hook review.
   Until then the plugin does nothing.
 - Sign out: `codex mcp logout agent-services` removes the sign-in from this computer only. On our server it ends
   when you sign in from the Claude Code plugin or another Codex (one seat: the newest sign-in wins), when your

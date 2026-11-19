@@ -6,6 +6,11 @@ j = {p: json.loads((R / p).read_text(encoding="utf-8")) for p in
      [".codex-plugin/plugin.json", ".mcp.json", "hooks/hooks.json", ".agents/plugins/marketplace.json"]}
 man = j[".codex-plugin/plugin.json"]
 ok(man["name"] == "agent-services" and re.fullmatch(r"\d+\.\d+\.\d+(-beta\.\d+)?", man["version"]), "manifest name/version")
+ok(man["skills"] == "./skills/" and
+   man["extensions"]["com.openai"]["onboardingSkill"] == "./skills/agent-services/SKILL.md",
+   "manifest exposes the agent-services skill for setup")
+ok(man["mcpServers"] == "./.mcp.json" and man["hooks"] == "./hooks/hooks.json",
+   "manifest references the bundled MCP and hook definitions")
 ok(all("agent-plugin-codex" in man["interface"][k] for k in ("websiteURL", "privacyPolicyURL", "termsOfServiceURL")), "manifest URLs")
 for k in ("privacyPolicyURL", "termsOfServiceURL"):
     ok((R / man["interface"][k].rsplit("/blob/main/", 1)[1]).exists(), f"{k} target file exists")
@@ -28,7 +33,7 @@ for ev, groups in H.items():
     ok(got == expect.get(ev), f"{ev} hooks exact")
     for g in groups:
         m = g.get("matcher")
-        # Codex 0.170 hooks/src/engine/matcher.rs: [A-Za-z0-9_|]+ is an exact (pipe-separated) match, not a regex
+        # Codex 0.169.1 treats plain alphanumeric and underscore names as exact matches.
         ok(m is None or re.fullmatch(r"[A-Za-z0-9_|]+", m), f"{ev} matcher {m} is exact")
         for h in g["hooks"]:
             ok(h["type"] == "mcp_tool" and h["server"] == "agent-services", f"{ev} handler type/server")

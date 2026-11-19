@@ -1,16 +1,25 @@
 {
   "name": "agent-services",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "description": "agent-services for Codex: working methods once per thread and model advice for spawn_agent, from the agent-services server through a remote MCP connection (no local process); needs a signed-in account",
   "author": { "name": "Yi Zhang" },
   "license": "SEE LICENSE IN LICENSE",
   "homepage": "https://github.com/floating-thoughts/agent-plugin-codex",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "hooks": "./hooks/hooks.json",
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/agent-services/SKILL.md"
+    }
+  },
   "interface": {
     "displayName": "agent-services",
     "shortDescription": "Working methods and subagent routing advice for Codex",
     "developerName": "Yi Zhang",
     "websiteURL": "https://github.com/floating-thoughts/agent-plugin-codex",
     "privacyPolicyURL": "https://github.com/floating-thoughts/agent-plugin-codex/blob/main/DATA.md",
-    "termsOfServiceURL": "https://github.com/floating-thoughts/agent-plugin-codex/blob/main/LICENSE"
+    "termsOfServiceURL": "https://github.com/floating-thoughts/agent-plugin-codex/blob/main/LICENSE",
+    "defaultPrompt": ["Check agent-services sign-in and hook setup in Codex."]
   }
 }
