@@ -15,7 +15,9 @@ on this machine. All of it is an agent-services suggestion, not the user's own i
   code. A signed-out `codex exec` shows no hint, so suggest this command whenever the agent-services tools are
   not available.
 - Desktop app: the sign-in page opens when the plugin is installed or enabled.
-- Update: users who already added the marketplace upgrade with `codex plugin marketplace upgrade agent-plugin`;
+- Install: `codex plugin marketplace add floating-thoughts/agent-plugin-codex`, then
+  `codex plugin add agent-services@agent-plugin-codex` (or `/plugins` in Codex). Start a new session afterwards.
+- Update: users who already added the marketplace upgrade with `codex plugin marketplace upgrade agent-plugin-codex`;
   adding it again fails with 'already added from a different source'. After every update, trust the hooks again
   (below); until then the plugin does nothing.
 - One account has one seat, shared by Codex and the Claude Code plugin: signing in from Codex ends the Claude Code
@@ -48,6 +50,9 @@ accepted as the trusted hash.
 - `setup_sharing`: Codex usage sharing (token counts per model per day, sent after each model request). It turns
   on only with Yes on the sign-in page (No turns it off); `sharing off` turns it off, `sharing preview` shows what is
   sent and kept. Call it only with the user's own answer.
+
+Subagent advice covers both Codex subagent tool sets: the current one (hook tool name `collaborationspawn_agent`,
+advice per `task_name`) and the deprecated `multi_agent` one (`spawn_agent`, advice once per turn).
 
 When the server cannot be reached, the hooks fail open and Codex goes on unchanged; Codex waits for each hook, so a
 slow server can add up to 2 seconds to a model request and up to 5 seconds to a prompt or a subagent start.
